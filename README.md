@@ -1,2 +1,2 @@
 # machine-learning-homework
-A repository for all machine learning zoomcamp homework
+A repository for all machine learning zoomcamp homework. Wish me luck!
