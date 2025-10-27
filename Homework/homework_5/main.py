@@ -10,7 +10,7 @@ from fastapi import FastAPI
 with open('pipeline_v1.bin', 'rb') as f_in: # Loading or reading
     pipeline = pickle.load(f_in)
 
-app = FastAPI(title="Lead Score Prediction")
+app = FastAPI(title="lead-score-prediction")
 
 def predict_leadscore(data):
     leadscore = pipeline.predict_proba([data])[0, 1]  # probability of lead conversion

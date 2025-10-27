@@ -1,6 +1,8 @@
 import requests
 
-url = 'http://localhost:9696/predict'
+# url = 'http://localhost:9696/predict'
+
+url = 'https://floral-brook-8390.fly.dev/predict'
 
 customer = {
   "gender": "female",
