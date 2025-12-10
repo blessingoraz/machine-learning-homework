@@ -72,13 +72,24 @@ def predict(url):
 
 
 def lambda_handler(event, context):
-    """
-    Lambda entrypoint.
-    Expects event like: {"url": "https://..."}
-    """
-    url = event.get("url")
+    # Case 1: direct Lambda invocation: {"url": "..."}
+    if "url" in event:
+        url = event["url"]
+    else:
+        # Case 2: API Gateway: event["body"] is a JSON string like '{"url": "..."}'
+        body = event.get("body")
+        if isinstance(body, str):
+            try:
+                body = json.loads(body)
+            except Exception:
+                body = {}
+        elif body is None:
+            body = {}
+
+        url = body.get("url")
 
     if not url:
+        # For API Gateway (HTTP API / REST), this is the usual response format
         return {
             "statusCode": 400,
             "body": json.dumps({"error": "url is required"})
@@ -92,7 +103,6 @@ def lambda_handler(event, context):
             "body": json.dumps({"error": str(e)})
         }
 
-    # You can return just score, but wrapping in JSON is cleaner
     return {
         "statusCode": 200,
         "body": json.dumps({"score": score})
